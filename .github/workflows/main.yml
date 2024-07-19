@@ -30,6 +30,13 @@ jobs:
     - name: Fetch all branches from the upstream repository
       run: git fetch upstream
 
+    - name: Set up authentication
+      run: |
+        git remote set-url origin https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ACTOR: ${{ github.actor }}
+
     - name: Merge upstream/main into forked repo main branch
       run: |
         git checkout main
@@ -37,3 +44,4 @@ jobs:
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ACTOR: ${{ github.actor }}
