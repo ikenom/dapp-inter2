@@ -25,25 +25,32 @@ jobs:
           NEW_REFERENCED_UI=$(curl -s $URL | jq -r '.value' | jq -r '.values[]' | jq -r .body | sed 's/^#//' | jq -r .current.ReferencedUI.value)
 
           # Path to store the previous value
-          OLD_NEW_REFERENCED_UI_FILE="./DEPLOYED_HASH"
+          OLD_REFERENCED_UI_FILE="./DEPLOYED_HASH"
 
           # Check if the previous value exists
-          if [ -f "$OLD_NEW_REFERENCED_UI_FILE" ]; then
+          if [ -f "$OLD_REFERENCED_UI_FILE" ]; then
             # Read the previous value
-            OLD_REFERENCED_UI=$(cat $OLD_NEW_REFERENCED_UI_FILE)
+            OLD_REFERENCED_UI=$(cat $OLD_REFERENCED_UI_FILE)
           else
             # File does not exist, set previous value to empty
             OLD_REFERENCED_UI=""
           fi
 
-          echo $OLD_REFERENCED_UI
+          # Output the values for the next step
+          echo "NEW_VALUE=$NEW_REFERENCED_UI" >> $GITHUB_ENV
+          echo "PREVIOUS_VALUE=$OLD_REFERENCED_UI" >> $GITHUB_ENV
+      - name: Update DEPLOYED_HASH if value changed
+        if: env.NEW_VALUE != env.PREVIOUS_VALUE
+        run: |
+          # Define the path to the previous value file
+          REFERENCED_UI_FILE="./DEPLOYED_HASH"
 
-          # Compare the new value with the previous value
-          if [ "$NEW_REFERENCED_UI" != "$OLD_REFERENCED_UI" ]; then
-            echo "Value has changed: $NEW_REFERENCED_UI"
+          # Save the new value to the DEPLOYED_HASH file
+          echo "$NEW_VALUE" > $REFERENCED_UI_FILE
 
-            # Save the new value as the previous value
-            # echo "$new_value" > $previous_value_file
-          else
-            echo "Value has not changed."
-          fi
+          # Configure git and commit changes
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add $previous_value_file
+          git commit -m "Update DEPLOYED_HASH with new value"
+          git push
