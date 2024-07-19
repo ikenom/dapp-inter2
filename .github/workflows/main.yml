@@ -25,7 +25,7 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
     - name: Add the upstream repository
-      run: git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPO.git
+      run: git remote add upstream https://github.com/iomekam/dapp-inter.git
 
     - name: Fetch all branches from the upstream repository
       run: git fetch upstream
