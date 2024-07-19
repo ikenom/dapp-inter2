@@ -39,9 +39,8 @@ jobs:
 
     - name: Merge upstream/main into forked repo main branch
       run: |
-        git checkout base
-        git merge upstream/main
-        git push origin base
+        git checkout -B base upstream/main
+        git push -f origin base
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_ACTOR: ${{ github.actor }}
