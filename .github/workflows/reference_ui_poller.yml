@@ -30,11 +30,13 @@ jobs:
           # Check if the previous value exists
           if [ -f "$OLD_NEW_REFERENCED_UI_FILE" ]; then
             # Read the previous value
-            OLD_REFERENCED_UI=$(cat $previous_value_file)
+            OLD_REFERENCED_UI=$(cat $OLD_NEW_REFERENCED_UI_FILE)
           else
             # File does not exist, set previous value to empty
             OLD_REFERENCED_UI=""
           fi
+
+          echo $OLD_REFERENCED_UI
 
           # Compare the new value with the previous value
           if [ "$NEW_REFERENCED_UI" != "$OLD_NEW_REFERENCED_UI_FILE" ]; then
