@@ -1,4 +1,4 @@
-name: Sync Fork with Upstream
+name: Sync Release with Upstream
 
 on:
   schedule:
@@ -39,8 +39,8 @@ jobs:
 
     - name: Merge upstream/main into forked repo main branch
       run: |
-        git checkout -B base upstream/main
-        git push -f origin base
+        git checkout -B release upstream/main
+        git push -f origin release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_ACTOR: ${{ github.actor }}
