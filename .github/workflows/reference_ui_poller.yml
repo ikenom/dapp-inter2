@@ -51,6 +51,6 @@ jobs:
           # Configure git and commit changes
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add $previous_value_file
+          git add $REFERENCED_UI_FILE
           git commit -m "Update DEPLOYED_HASH with new value"
           git push
