@@ -39,7 +39,7 @@ jobs:
           echo $OLD_REFERENCED_UI
 
           # Compare the new value with the previous value
-          if [ "$NEW_REFERENCED_UI" != "$OLD_NEW_REFERENCED_UI_FILE" ]; then
+          if [ "$NEW_REFERENCED_UI" != "$OLD_REFERENCED_UI" ]; then
             echo "Value has changed: $NEW_REFERENCED_UI"
 
             # Save the new value as the previous value
