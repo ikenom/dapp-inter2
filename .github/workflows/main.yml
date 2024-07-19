@@ -40,7 +40,7 @@ jobs:
     - name: Merge upstream/main into forked repo main branch
       run: |
         git checkout main
-        git merge upstream/main
+        git merge --allow-unrelated-histories --allow-unrelated-histories upstream/main
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
